@@ -8,11 +8,12 @@ namespace Gilded_Rose_Tests.Sources
 {
     public static class GildedRoseTestCaseSource
     {
-        private static Dictionary<string, IEnumerable<Item>> _expectedresults;
+        private static readonly List<TestItem> _expectedresults;
+        private static int _numberofdays = 31;
         static GildedRoseTestCaseSource()
         {
             var json = File.ReadAllText("Sources/ApprovedResults.json");
-            _expectedresults = JsonSerializer.Deserialize<Dictionary<string, IEnumerable<Item>>>(json);
+            _expectedresults = JsonSerializer.Deserialize<List<TestItem>>(json);
         }
 
         public static IEnumerable<object[]> DexterityVest()
@@ -20,14 +21,54 @@ namespace Gilded_Rose_Tests.Sources
             return GetExpectedResults("+5 Dexterity Vest");
         }
 
-        private static IEnumerable<object[]> GetExpectedResults(string itemname)
+        public static IEnumerable<object[]> AgedBrie()
         {
-            var results = _expectedresults.SelectMany(d => d.Value).Where(d => d.Name == itemname).ToList();
+            return GetExpectedResults("Aged Brie");
+        }
 
-            for (int i = 0; i < results.Count; i++)
+        public static IEnumerable<object[]> Elixir()
+        {
+            return GetExpectedResults("Elixir of the Mongoose");
+        }
+
+        public static IEnumerable<object[]> Sulfuras1()
+        {
+            return GetExpectedResults("Sulfuras, Hand of Ragnaros");
+        }
+
+        public static IEnumerable<object[]> Sulfuras2()
+        {
+            return GetExpectedResults("Sulfuras, Hand of Ragnaros",1);
+        }
+
+        public static IEnumerable<object[]> BackstagePass1()
+        {
+            return GetExpectedResults("Backstage passes to a TAFKAL80ETC concert");
+        }
+
+        public static IEnumerable<object[]> BackstagePass2()
+        {
+            return GetExpectedResults("Backstage passes to a TAFKAL80ETC concert",1);
+        }
+
+        public static IEnumerable<object[]> BackstagePass3()
+        {
+            return GetExpectedResults("Backstage passes to a TAFKAL80ETC concert",2);
+        }
+
+        public static IEnumerable<object[]> Conjured()
+        {
+            return GetExpectedResults("Conjured Mana Cake");
+        }
+
+        private static IEnumerable<object[]> GetExpectedResults(string itemname, int index = 0)
+        {
+            var results = _expectedresults.Where(d => d.Name == itemname).Skip(31 * index).Take(31).ToList();
+
+            foreach (var result in results)
             {
                 yield return
-                    new object[] {i, results[i].Name, results[i].SellIn, results[i].Quality };
+                    new object[] { result.Day, result.Name, result.SellIn, result.Quality };
             }
         }
     }
