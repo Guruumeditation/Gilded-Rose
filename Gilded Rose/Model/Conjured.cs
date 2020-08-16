@@ -9,6 +9,9 @@ namespace GildedRose.Model
         public Conjured(Item item)
         {
             _item = item ?? throw new ArgumentNullException(nameof(item));
+            Name = _item.Name;
+            SellIn = _item.SellIn;
+            Quality = _item.Quality;
         }
 
         #region Overrides of Item
@@ -16,7 +19,8 @@ namespace GildedRose.Model
         public override void UpdateQuality(bool updatesellin = true)
         {
             _item.UpdateQuality();
-            _item.UpdateQuality(false);
+            if (_item.SellIn < -1)
+                _item.UpdateQuality(false);
 
             SellIn = _item.SellIn;
             Quality = _item.Quality;

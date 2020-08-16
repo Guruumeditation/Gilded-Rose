@@ -16,16 +16,17 @@ namespace GildedRose.Model
                 case int i when i < 0:
                     Quality = 0;
                     break;
-                case int i when i <= 5:
+                case int i when i < 5:
                     Quality = Quality + 3;
                     break;
-                case int i when i <= 10:
+                case int i when i < 10:
                     Quality = Quality + 2;
                     break;
                 default:
-                    --Quality;
+                    ++Quality;
                     break;
             }
+            Quality = Math.Min(Quality, 50);
         }
 
         #endregion
