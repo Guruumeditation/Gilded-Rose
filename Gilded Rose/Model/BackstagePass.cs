@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GildedRose.Model
 {
@@ -14,7 +12,7 @@ namespace GildedRose.Model
             switch (SellIn)
             {
                 case int i when i < 0:
-                    Quality = 0;
+                    Quality = _minQuality;
                     break;
                 case int i when i < 5:
                     Quality = Quality + 3;
@@ -26,7 +24,7 @@ namespace GildedRose.Model
                     ++Quality;
                     break;
             }
-            Quality = Math.Min(Quality, 50);
+            Quality = Math.Min(Quality, _maxQuality);
         }
 
         #endregion

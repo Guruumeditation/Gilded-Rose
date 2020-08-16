@@ -9,7 +9,7 @@ namespace GildedRose.Model
         public override void UpdateQuality(bool updatesellin = true)
         {
             SellIn--;
-            Quality = Math.Min(Quality + (SellIn >= 0 ? 1 : 2), 50);
+            Quality = Math.Min(Quality + (SellIn >= 0 ? 1 : 2), _maxQuality);
         }
 
         #endregion

@@ -1,10 +1,12 @@
 ﻿using System;
-using System.Data.SqlTypes;
 
 namespace GildedRose.Model
 {
     public class Item
     {
+        protected static int _minQuality = 0;
+        protected static int _maxQuality = 50;
+
         public string Name { get; set; }
         public int SellIn { get; set; }
         public int Quality { get; set; }
@@ -13,7 +15,7 @@ namespace GildedRose.Model
         {
             if (updatesellin)
                 SellIn--;
-            Quality = Math.Max(Quality - (SellIn >= 0 ? 1 : 2),0);
+            Quality = Math.Max(Quality - (SellIn >= 0 ? 1 : 2), _minQuality);
         }
     }
 }
